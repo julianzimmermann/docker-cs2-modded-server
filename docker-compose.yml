@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  cs2-server:
+    build: ./docker
+    container_name: ${PROJECT_NAME}
+    restart: unless-stopped
+    environment:
+      SERVER_NAME: ${CS2_SERVERNAME}
+      RCON_PASSWORD: ${CS2_RCONPW}
+      API_KEY: ${API_KEY}
+      STEAM_ACCOUNT: ${SRCDS_TOKEN}
+      SERVER_PASSWORD: ${CS2_PW}
+      PORT: ${CS2_PORT}
+      TICKRATE: ${CS2_TICKRATE}
+      MAXPLAYERS: ${CS2_MAX_PLAYER}
+      LAN: ${CS2_LAN}
+    volumes:
+      - cs2:/home/steam/cs2
+      - ./custom_files:/home/steam/cs2/custom_files:rw
+    ports:
+      - "27015:27015/tcp"
+      - "27015:27015/udp"
+      - "27020:27020/udp"
+volumes:
+  cs2:
+    name: "${PROJECT_NAME}-data"
